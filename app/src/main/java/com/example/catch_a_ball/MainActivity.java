@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void changePos(){
         CheckHit();
-        //orange
+
         orange_x -= 12;
         if(orange_x < 0){
             orange_x = ScreenWidth + 20;
@@ -156,6 +156,14 @@ public class MainActivity extends AppCompatActivity {
         if(!start_flag) {
             start_flag = true;
             StartLabel.setVisibility(View.GONE);
+
+            //FrameHeight
+            FrameLayout frameLayout = findViewById(R.id.frame);
+            FrameHeight = frameLayout.getHeight();
+            //BuSize
+            bu_y = bu.getY();
+            busize = bu.getHeight();
+
             //repeative task
             timer.schedule(new TimerTask() {
                 @Override
@@ -165,12 +173,6 @@ public class MainActivity extends AppCompatActivity {
             }, 0, 20);
         }
         else{
-            //FrameHeight
-            FrameLayout frameLayout = findViewById(R.id.frame);
-            FrameHeight = frameLayout.getHeight();
-            //BuSize
-            bu_y = bu.getY();
-            busize = bu.getHeight();
             //Action
             if(event.getAction() == MotionEvent.ACTION_DOWN){
                 action_flag = true;
