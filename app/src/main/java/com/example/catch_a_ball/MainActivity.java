@@ -2,11 +2,15 @@ package com.example.catch_a_ball;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Point;
 import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,10 +23,13 @@ public class MainActivity extends AppCompatActivity {
     //elements
     private TextView StartLabel,ScoreLabel;
     private ImageView bu;
-    private ImageView pink;
+    private ImageView pink,black,orange;
 
     //position
     private float bu_y;
+    private float black_x,black_y;
+    private float pink_x,pink_y;
+    private float orange_x,orange_y;
 
     //timer
     private Timer timer = new Timer();
@@ -35,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     //size
     private int FrameHeight;
     private int busize;
+    private int ScreenHeight,ScreenWidth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,14 +53,56 @@ public class MainActivity extends AppCompatActivity {
         ScoreLabel = findViewById(R.id.ScoreLabel);
         bu = findViewById(R.id.image);
         pink = findViewById(R.id.pink);
+        black = findViewById(R.id.black);
+        orange = findViewById(R.id.orange);
+
+        //ScreenSize
+        WindowManager windowManager = getWindowManager();
+        Display display = windowManager.getDefaultDisplay();
+        Point Size = new Point();
+        display.getSize(Size);
+        ScreenWidth = Size.x;
+        ScreenHeight = Size.y;
 
         //initial position
-        pink.setX(-80.0f);
-        pink.setY(-80.0f);
+        orange.setX(-50.0f);
+        orange.setY(-50.0f);
+        black.setX(-50.0f);
+        black.setY(-50.0f);
+        pink.setX(-50.0f);
+        pink.setY(-50.0f);
 
     }
 
     public void changePos(){
+        //orange
+        orange_x -= 12;
+        if(orange_x < 0){
+            orange_x = ScreenWidth + 20;
+            orange_y = (float) Math.ceil(Math.random()*(FrameHeight-orange.getHeight()));
+        }
+        orange.setX(orange_x);
+        orange.setY(orange_y);
+
+        //black
+        black_x -= 16;
+        if(black_x < 0){
+            black_x = ScreenWidth + 10;
+            black_y = (float) Math.ceil(Math.random()*(FrameHeight-black.getHeight()));
+        }
+        black.setX(black_x);
+        black.setY(black_y);
+
+        //pink
+        pink_x -= 20;
+        if(pink_x < 0){
+            pink_x = ScreenWidth + 250;
+            pink_y = (float) Math.ceil(Math.random()*(FrameHeight-pink.getHeight()));
+        }
+        pink.setX(pink_x);
+        pink.setY(pink_y);
+
+
         if(action_flag){
             //touching
             bu_y -= 20;

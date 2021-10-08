@@ -36,16 +36,22 @@
             android:src="@drawable/bu" />
 
         <ImageView
+            android:id="@+id/orange"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/orange"/>
+
+        <ImageView
+            android:id="@+id/black"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/black"/>
+
+        <ImageView
             android:id="@+id/pink"
             android:layout_width="16dp"
             android:layout_height="16dp"
-            android:src="@drawable/pink">
-
-        </ImageView>
-
-
-
-
+            android:src="@drawable/pink"/>
 
 
     </FrameLayout>
