@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
     //timer
     private Timer timer = new Timer();
-    private Handler handler = new Handler();
 
     //status
     private boolean action_flag = false;
@@ -43,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
     private int FrameHeight;
     private int busize;
     private int ScreenHeight,ScreenWidth;
+
+    //score
+    private int score = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void changePos(){
+        CheckHit();
         //orange
         orange_x -= 12;
         if(orange_x < 0){
@@ -115,6 +118,37 @@ public class MainActivity extends AppCompatActivity {
         if(bu_y < 0) bu_y = 0;
         if(bu_y > FrameHeight - busize) bu_y = FrameHeight - busize;
         bu.setY(bu_y);
+
+        //set the score
+        ScoreLabel.setText("Score:"+ score);
+    }
+
+    public void CheckHit(){
+        //orange
+        float OrangeCenterX = orange_x + orange.getWidth()/2.0f;
+        float OrangeCenterY = orange_y + orange.getWidth()/2.0f;
+        if(0 <= OrangeCenterX && OrangeCenterX <= busize && bu_y <= OrangeCenterY && OrangeCenterY <= bu_y + busize){
+            orange_x = -100f;
+            score += 10;
+        }
+        // pink
+        float PinkCenterX = pink_x + pink.getWidth()/2.0f;
+        float PinkCenterY = pink_y + pink.getWidth()/2.0f;
+        if(0 <= PinkCenterX && PinkCenterX <= busize && bu_y <= PinkCenterY && PinkCenterY <= bu_y + busize){
+            pink_x = -100f;
+            score += 30;
+        }
+        //black
+        float BlackCenterX = black_x + black.getWidth()/2.0f;
+        float BlackCenterY = black_y + black.getWidth()/2.0f;
+        if(0 <= BlackCenterX && BlackCenterX <= busize && bu_y <= BlackCenterY && BlackCenterY <= bu_y + busize){
+            // game over
+            if(timer != null){
+                timer.cancel();
+                timer = null;
+            }
+            //show result
+        }
     }
 
     @Override
@@ -122,17 +156,12 @@ public class MainActivity extends AppCompatActivity {
         if(!start_flag) {
             start_flag = true;
             StartLabel.setVisibility(View.GONE);
-
+            //repeative task
             timer.schedule(new TimerTask() {
                 @Override
-                public void run() {
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            changePos();
-                        }
-                    });
-                }
+               public void run() {
+                    changePos();
+               }
             }, 0, 20);
         }
         else{
@@ -142,8 +171,7 @@ public class MainActivity extends AppCompatActivity {
             //BuSize
             bu_y = bu.getY();
             busize = bu.getHeight();
-
-
+            //Action
             if(event.getAction() == MotionEvent.ACTION_DOWN){
                 action_flag = true;
             }
