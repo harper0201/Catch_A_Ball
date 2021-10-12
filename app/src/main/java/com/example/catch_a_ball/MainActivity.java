@@ -2,6 +2,7 @@ package com.example.catch_a_ball;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Point;
 import android.media.Image;
 import android.os.Bundle;
@@ -18,31 +19,27 @@ import android.widget.TextView;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity {
+import javax.xml.transform.Result;
 
+public class MainActivity extends AppCompatActivity {
     //elements
     private TextView StartLabel,ScoreLabel;
     private ImageView bu;
     private ImageView pink,black,orange;
-
     //position
     private float bu_y;
     private float black_x,black_y;
     private float pink_x,pink_y;
     private float orange_x,orange_y;
-
     //timer
     private Timer timer = new Timer();
-
     //status
     private boolean action_flag = false;
     private boolean start_flag = false;
-
     //size
     private int FrameHeight;
     private int busize;
     private int ScreenHeight,ScreenWidth;
-
     //score
     private int score = 0;
 
@@ -86,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
         }
         orange.setX(orange_x);
         orange.setY(orange_y);
-
         //black
         black_x -= 16;
         if(black_x < 0){
@@ -95,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
         }
         black.setX(black_x);
         black.setY(black_y);
-
         //pink
         pink_x -= 20;
         if(pink_x < 0){
@@ -147,7 +142,9 @@ public class MainActivity extends AppCompatActivity {
                 timer.cancel();
                 timer = null;
             }
-            //show result
+                Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
+                intent.putExtra("SCORE",score);
+                startActivity(intent);
         }
     }
 
@@ -156,15 +153,10 @@ public class MainActivity extends AppCompatActivity {
         if(!start_flag) {
             start_flag = true;
             StartLabel.setVisibility(View.GONE);
-
-            //FrameHeight
             FrameLayout frameLayout = findViewById(R.id.frame);
             FrameHeight = frameLayout.getHeight();
-            //BuSize
             bu_y = bu.getY();
             busize = bu.getHeight();
-
-            //repeative task
             timer.schedule(new TimerTask() {
                 @Override
                public void run() {
@@ -173,7 +165,6 @@ public class MainActivity extends AppCompatActivity {
             }, 0, 20);
         }
         else{
-            //Action
             if(event.getAction() == MotionEvent.ACTION_DOWN){
                 action_flag = true;
             }
