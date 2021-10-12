@@ -21,13 +21,14 @@ public class ResultActivity extends AppCompatActivity {
         ScoreLabel.setText(score + " ");
 
         SharedPreferences sharedPreferences = this.getSharedPreferences("GAME_DATA", Context.MODE_PRIVATE);
-        int HighScore = sharedPreferences.getInt("HIGH_CORE",0);;
+        int HighScore = sharedPreferences.getInt("HIGH_SCORE",0);
+
             if(HighScore < score){
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putInt("HIGH SCORE",score);
-                editor.commit();
                 HighScoreLabel.setText("high score:" + score);
-            }
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("HIGH_SCORE",score);
+                editor.commit();
+                }
             else{
                 HighScoreLabel.setText("high score:" + HighScore);
             }
