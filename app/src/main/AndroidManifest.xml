@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.catch_a_ball">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.catch_a_ball"
+    tools:ignore="ImpliedTouchscreenHardware,MissingLeanbackLauncher">
+
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -10,10 +16,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Catch_A_Ball">
         <activity
-            android:name=".ResultActivity"
-            android:exported="true" />
-        <activity
             android:name=".MainActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ResultActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".StartActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
