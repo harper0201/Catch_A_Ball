@@ -6,12 +6,12 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
 
-class SoundPlayer {
+public class SoundPlayer {
     private static SoundPool soundPool;
     private static int hitSound, overSound;
     private boolean mySoundLoaded;
 
-    SoundPlayer(Context context) {
+    public SoundPlayer(Context context) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             // SoundPool is deprecated in API level 21.(Lollipop)
@@ -30,7 +30,7 @@ class SoundPlayer {
         overSound = soundPool.load(context, R.raw.over, 1);
     }
 
-    void playHitSound() {
+    public void playHitSound() {
         soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
             @Override
             public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
@@ -39,7 +39,7 @@ class SoundPlayer {
         });
     }
 
-    void playOverSound() {
+    public void playOverSound() {
         soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
             @Override
             public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {

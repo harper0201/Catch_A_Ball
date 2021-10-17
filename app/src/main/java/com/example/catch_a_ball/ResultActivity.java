@@ -17,23 +17,21 @@ public class ResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_result);
         TextView ScoreLabel = findViewById(R.id.ScoreLabel);
         TextView HighScoreLabel = findViewById(R.id.HighScoreLabel);
-        int score = getIntent().getIntExtra("SCORE",0);
+        int score = getIntent().getIntExtra("SCORE", 0);
         ScoreLabel.setText(score + " ");
 
         SharedPreferences sharedPreferences = this.getSharedPreferences("GAME_DATA", Context.MODE_PRIVATE);
-        int HighScore = sharedPreferences.getInt("HIGH_SCORE",0);
+        int HighScore = sharedPreferences.getInt("HIGH_SCORE", 0);
 
-            if(HighScore < score){
-                HighScoreLabel.setText("high score:" + score);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putInt("HIGH_SCORE",score);
-                editor.commit();
-                }
-            else{
-                HighScoreLabel.setText("high score:" + HighScore);
-            }
+        if (HighScore < score) {
+            HighScoreLabel.setText("high score:" + score);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putInt("HIGH_SCORE", score);
+            editor.commit();
+        } else {
+            HighScoreLabel.setText("high score:" + HighScore);
+        }
     }
-
     public void TryAgain(View view){
         startActivity(new Intent(getApplicationContext(),MainActivity.class));
     }
