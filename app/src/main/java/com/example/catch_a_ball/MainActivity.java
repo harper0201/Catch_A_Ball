@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Point;
 import android.media.Image;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Display;
@@ -42,11 +43,14 @@ public class MainActivity extends AppCompatActivity {
     private int ScreenHeight,ScreenWidth;
     //score
     private int score = 0;
+    //sound
+    private SoundPlayer myPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        myPlayer = new SoundPlayer(this);
 
         StartLabel = findViewById(R.id.StartLabel);
         ScoreLabel = findViewById(R.id.ScoreLabel);
@@ -70,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
         black.setY(-50.0f);
         pink.setX(-50.0f);
         pink.setY(-50.0f);
-
     }
 
     public void changePos(){
@@ -125,6 +128,8 @@ public class MainActivity extends AppCompatActivity {
         if(0 <= OrangeCenterX && OrangeCenterX <= busize && bu_y <= OrangeCenterY && OrangeCenterY <= bu_y + busize){
             orange_x = -100f;
             score += 10;
+            myPlayer.playHitSound();
+
         }
         // pink
         float PinkCenterX = pink_x + pink.getWidth()/2.0f;
@@ -132,11 +137,13 @@ public class MainActivity extends AppCompatActivity {
         if(0 <= PinkCenterX && PinkCenterX <= busize && bu_y <= PinkCenterY && PinkCenterY <= bu_y + busize){
             pink_x = -100f;
             score += 30;
+            myPlayer.playHitSound();;
         }
         //black
         float BlackCenterX = black_x + black.getWidth()/2.0f;
         float BlackCenterY = black_y + black.getWidth()/2.0f;
         if(0 <= BlackCenterX && BlackCenterX <= busize && bu_y <= BlackCenterY && BlackCenterY <= bu_y + busize){
+            myPlayer.playOverSound();
             // game over
             if(timer != null){
                 timer.cancel();
